@@ -1,0 +1,36 @@
+/* Status pills per the component board (06 — Status en data): 11px medium,
+   sentence case, 4px 10px in a full-radius pill. The tint per colour is set
+   in theme.tsx `vars` — a 14% wash of the hue with the design's coloured
+   *text* token on top, rather than Mantine's own light variant, whose text
+   colour is the saturated hue and vanishes on the near-black card. */
+
+.root {
+  --badge-radius: var(--radius-full);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Mantine draws its dot pill as a flat #3b3b3b slab with a ring of the same
+   grey — straight colours, not vars — which sits off the board's
+   blue-tinted neutrals. Draw it as the neutral pill instead. */
+.root[data-variant="dot"] {
+  background: var(--w05);
+  border-color: transparent;
+  color: var(--tx2);
+}
+
+.label {
+  font-weight: 500;
+  overflow: visible;
+}
+
+/* The leading dot: `<Badge leftSection={<span className={badge.dot} />}>`
+   — see StatusPill, which does this for you. */
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+  flex: none;
+}

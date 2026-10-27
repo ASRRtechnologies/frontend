@@ -1,0 +1,72 @@
+/* Menus and popovers per the component board: the floating surface
+   (--surface-float) behind a --w09 hairline at radius 10, 5px inset, the large
+   overlay shadow — flat, no blur. Items are 13px on 8px 10px with a 7px
+   radius, a --w05 wash on hover; a destructive item is --red-tx on a red
+   wash. Shared by Popover, HoverCard and Menu through the theme. */
+
+:root[data-mantine-color-scheme="light"] {
+  --popover-item-hover: var(--w05);
+  --popover-item-active: var(--w07);
+  --popover-background: var(--surface-float);
+  --popover-border: var(--w09);
+}
+
+:root[data-mantine-color-scheme="dark"] {
+  --popover-background: var(--surface-float);
+  --popover-border: var(--w09);
+  --popover-item-hover: var(--w05);
+  --popover-item-active: var(--w07);
+}
+
+.dropdown {
+  background-color: var(--popover-background);
+  border: 1px solid var(--popover-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 5px;
+}
+
+.item {
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  /* Mantine writes --menu-item-color / --menu-item-hover from a Menu.Item's
+     `color` prop — a destructive item stays red, everything else is --tx. */
+  color: var(--menu-item-color, var(--tx));
+  transition: background-color var(--dur-hover) var(--ease);
+
+  &:hover {
+    background-color: var(--menu-item-hover, var(--popover-item-hover));
+  }
+
+  &[data-disabled=true] {
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  &[data-active="true"] {
+    background-color: var(--popover-item-active);
+  }
+
+  &:focus {
+    background-color: var(--menu-item-hover, var(--popover-item-hover));
+  }
+}
+
+.itemSection {
+  color: var(--tx3);
+}
+
+.divider {
+  margin: 4px 0;
+  border-color: var(--w07);
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tx3);
+}

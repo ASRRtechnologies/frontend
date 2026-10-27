@@ -1,0 +1,39 @@
+/* Inline callouts per the component board (07 — Feedback): a 9% wash of the
+   hue with a 28% hairline of the same hue, 14px padding, radius 10, an 18px
+   icon, a 13px medium title and 12px --tx2 body. `--alert-color` is the hue
+   Mantine resolves from the `color` prop, so one rule covers every tone. */
+
+.root {
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--alert-color) 28%, transparent);
+
+  &[data-variant="light"] {
+    --alert-bg: color-mix(in srgb, var(--alert-color) 9%, transparent);
+  }
+}
+
+.wrapper {
+  gap: 11px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tx);
+}
+
+.message {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--tx2);
+}
+
+.closeButton {
+  color: var(--tx3);
+}

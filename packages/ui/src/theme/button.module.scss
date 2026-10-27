@@ -1,0 +1,83 @@
+/* Buttons per the component board (03 — Knoppen). The size → measurements
+   mapping lives in theme.tsx `vars`; this file carries what vars cannot: the
+   variant looks, the focus ring, motion and the disabled treatment.
+
+   The board's three variants map onto Mantine's like so:
+     primary      → variant="filled"   (solid accent, hover one step darker)
+     secondary    → variant="default"  (--w04 fill, --w08 hairline, hover --w08)
+     ghost        → variant="subtle"   (no border, --tx2 → --tx on hover)
+     destructive  → variant="filled" color="red"
+     tinted       → variant="outline"  (hairline in the hue, wash on hover) */
+
+.root {
+  transition:
+    background-color var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease),
+    box-shadow var(--dur-hover) var(--ease);
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  /* The board dims a disabled button to 40% of itself rather than swapping it
+     for a grey one — Mantine's grey lost the variant, so a disabled primary
+     and a disabled secondary looked identical. `--button-bd` is a full border
+     shorthand (`1px solid …`), so it has to go on `border`: as a
+     `border-color` it is invalid and falls back to currentColor, which drew a
+     grey frame around every disabled filled button. */
+  &:disabled,
+  &[data-disabled] {
+    background: var(--button-bg, transparent);
+    border: var(--button-bd, 1px solid transparent);
+    color: var(--button-color, inherit);
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &[data-loading] {
+    cursor: progress;
+  }
+
+  /* A faint fill under a lighter hairline: an empty box with a --w12 frame
+     read as a wireframe next to a filled primary. */
+  &[data-variant="default"] {
+    --button-bg: var(--w04);
+    --button-bd: 1px solid var(--w08);
+    --button-color: var(--tx);
+    --button-hover: var(--w08);
+  }
+
+  /* Mantine's outline is a full-strength 1px line in the hue around an empty
+     box, which reads as a wireframe on the dark card. The board keeps the hue
+     in the text and a soft hairline, and fills with a wash on hover. Mantine
+     sets `--button-bd` / `--button-hover` inline, so these go on the
+     properties themselves. */
+  &[data-variant="outline"] {
+    border-color: color-mix(in srgb, var(--button-color) 30%, transparent);
+
+    &:hover:not(:disabled):not([data-disabled]) {
+      background-color: color-mix(in srgb, var(--button-color) 10%, transparent);
+      border-color: color-mix(in srgb, var(--button-color) 45%, transparent);
+    }
+
+    &:disabled,
+    &[data-disabled] {
+      border-color: color-mix(in srgb, var(--button-color) 30%, transparent);
+    }
+  }
+
+  &[data-variant="subtle"] {
+    --button-color: var(--tx2);
+    --button-hover: var(--w05);
+
+    &:hover:not(:disabled):not([data-disabled]) {
+      color: var(--tx);
+    }
+  }
+}
+
+.label {
+  font-weight: 500;
+}

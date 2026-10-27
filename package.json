@@ -1,0 +1,21 @@
+{
+	"name": "asrr-frontend",
+	"private": true,
+	"type": "module",
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"build": "bun run --filter '*' build",
+		"test": "bun run --filter '*' test",
+		"typecheck": "bun run --filter '*' typecheck",
+		"check": "biome check .",
+		"format": "biome check --write ."
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.7",
+		"@types/node": "24",
+		"typescript": "5.9.3",
+		"vitest": "^4.1.11"
+	}
+}

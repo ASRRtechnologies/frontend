@@ -1,0 +1,52 @@
+:root[data-mantine-color-scheme="light"] {
+  --paper-background: var(--light-bg-secondary);
+  --paper-background-active: var(--gray-3);
+  --paper-background-low-opacity: rgba(255, 255, 255, 0.85);
+  --paper-border: var(--light-border-subtle);
+  --paper-hover: var(--light-bg-hover);
+  --paper-contrast-background: var(--light-bg-tertiary);
+  --sidebar-background: var(--light-bg-sidebar);
+}
+
+:root[data-mantine-color-scheme="dark"] {
+  --paper-background: var(--surface-card);
+  --paper-background-active: var(--gray-3);
+  --paper-background-low-opacity: rgba(18, 18, 18, 0.3);
+  /* The board's card edge is a --w09 hairline. This was --gray-2 (#6B7280), a
+     line as bright as secondary text, which is why bordered cards looked
+     boxed-in next to the redesigned ones. */
+  --paper-border: var(--w09);
+  --paper-hover: var(--surface-card-hover);
+  --paper-contrast-background: var(--gray-3);
+}
+
+.root {
+  background-color: var(--paper-background);
+  border-color: var(--paper-border);
+  /* Cards carry no shadow on dark — the hairline does the work — and lift 2px
+     with a brighter edge when they are a target. */
+  transition:
+    transform var(--dur-open) var(--ease),
+    border-color var(--dur-open) var(--ease),
+    background-color var(--dur-open) var(--ease);
+
+  :root[data-mantine-color-scheme="light"] & {
+    box-shadow: var(--light-shadow-sm);
+  }
+
+  &[data-with-hover="true"] {
+    &:hover {
+      background-color: var(--paper-hover);
+      border-color: var(--w12);
+      transform: translateY(-2px);
+    }
+  }
+
+  &[aria-haspopup="menu"] {
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--paper-hover);
+    }
+  }
+}

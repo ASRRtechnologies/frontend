@@ -1,0 +1,35 @@
+{
+	"name": "@asrr/utils",
+	"version": "0.0.0",
+	"description": "Framework-free formatting, address and search helpers shared by ASRR frontends.",
+	"license": "UNLICENSED",
+	"type": "module",
+	"sideEffects": false,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ASRRtechnologies/frontend.git",
+		"directory": "packages/utils"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"scripts": {
+		"build": "tsup",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"test": "vitest run"
+	},
+	"devDependencies": {
+		"happy-dom": "20.0.10",
+		"tsup": "8.5.0"
+	}
+}

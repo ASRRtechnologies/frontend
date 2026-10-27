@@ -1,0 +1,172 @@
+:root[data-mantine-color-scheme="light"] {
+  --nav-link-item-hover: var(--light-bg-hover);
+  --nav-link-item-active: rgba(37, 99, 235, 0.1);
+  --nav-link-rail: var(--mantine-color-primary-6);
+  --nav-link-icon-active: var(--mantine-color-primary-6);
+}
+
+:root[data-mantine-color-scheme="dark"] {
+  --nav-link-item-hover: var(--w05);
+  --nav-link-item-active: rgba(9, 105, 255, 0.14);
+  --nav-link-rail: var(--mantine-color-primary-6);
+  --nav-link-icon-active: var(--mantine-color-primary-4);
+}
+
+@keyframes navRailIn {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.root {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-content: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mantine-color-dimmed);
+  transition: background var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease);
+
+  &:hover {
+    background-color: var(--nav-link-item-hover);
+    color: var(--mantine-color-text);
+  }
+
+  // Active rows carry a primary wash plus a rail on the left edge, so the
+  // current location reads even when the sidebar is collapsed to icons.
+  // `data-active-group` marks a collapsed group holding the active route: it
+  // gets the same rail, because a dot would read as a different kind of state
+  // and disappears entirely on the icon rail.
+  &[data-status="active"],
+  &[data-active-group] {
+    background-color: var(--nav-link-item-active);
+    color: var(--mantine-color-text);
+    font-weight: 600;
+
+    // The icon lifts to the accent while the label stays plain text, so the
+    // row reads as current without shouting.
+    .section {
+      color: var(--nav-link-icon-active);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -10px;
+      top: 7px;
+      bottom: 7px;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--nav-link-rail);
+      transform-origin: center;
+      animation: navRailIn 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &::before {
+        animation: none;
+      }
+    }
+  }
+
+  &:focus-visible {
+    outline-offset: -2px; // Helps with focus ring visibility
+  }
+}
+
+// Expanded group: sub-routes hang off a vertical rail, indented under the
+// parent's icon, and sit a size and a tint quieter than the group itself.
+.children {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 2px 0 4px 22px;
+  padding-left: 12px;
+  border-left: 1px solid var(--w08);
+
+  :root[data-mantine-color-scheme="light"] & {
+    border-left-color: var(--light-border-subtle);
+  }
+
+  .root {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--gray-2);
+
+    &:hover {
+      color: var(--mantine-color-text);
+    }
+
+    &[data-status="active"] {
+      font-weight: 500;
+      color: var(--mantine-color-text);
+
+      // The group rail already marks the branch; a second rail per row would
+      // collide with the vertical line.
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+
+/* ── collapsed icon rail ────────────────────────────────────────────────
+   Driven by data-sidebar-collapsed on the shell (see app-shell.tsx): the row
+   shrinks to a centred 42px square, and everything but the icon drops out. */
+
+:global([data-sidebar-collapsed="true"]) {
+  .root {
+    width: 42px;
+    margin-inline: auto;
+    padding: 11px 0;
+    justify-content: center;
+    grid-template-columns: auto;
+    gap: 0;
+
+    &[data-status="active"]::before,
+    &[data-active-group]::before {
+      left: -6px;
+    }
+  }
+
+  // Mantine renders the row as icon / body / right section; only the icon
+  // survives. With a single grid column the survivors stack *vertically*, so
+  // anything left behind makes the row two glyphs tall instead of 40px.
+  .label,
+  .description,
+  .body {
+    display: none;
+  }
+
+  // The right section carries the group chevron, the favourite star and the
+  // count badges. Hiding the section rather than `.chevron` is what actually
+  // works: Mantine renders the chevron svg with an inline `display: block`,
+  // which no class can override without `!important`.
+  .section[data-position="right"] {
+    display: none;
+  }
+
+  // Nothing but the icon is left to carry the row, so it grows a little.
+  .section {
+    margin: 0;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  // Sub-routes have no room on the rail; the group icon stands for them.
+  .children {
+    display: none;
+  }
+}

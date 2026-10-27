@@ -1,0 +1,483 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ============================================================================
+   The design's palette, as one token layer.
+
+   Every token below is defined twice — once here for dark, once in the light
+   block — so a surface written against a token flips theme on its own. That is
+   the whole point: before this, light mode was a second set of `--light-*`
+   names that each consumer had to opt into by hand, which is why a page nobody
+   remembered to override stayed dark-on-dark.
+
+   Three ramps carry most of the weight:
+   - `--tx…--tx5`   text, brightest to faintest
+   - `--w02…--w22`  the hairlines, dividers and hover fills. White-on-dark
+                    becomes slate-on-light at the same alpha, so a rule written
+                    once reads correctly in both themes.
+   - `--*-tx`       coloured *text*. The dark values are pastels that carry on
+                    near-black; the light values are the saturated equivalents,
+                    because a pastel on white is unreadable.
+
+   Values come from "Sidebar and dashboard redesign" v18.
+   ============================================================================ */
+:root {
+  --black: #08090C;
+  --white: #ffffff;
+  --gray-1: #A3A9B6;
+  --gray-2: #6B7280;
+  --gray-3: #363638;
+  --gray-4: #1D1D1F;
+  --gray-5: #151517;
+  --gray-9: #08090C;
+  /* The design's two elevations, kept apart on purpose: cards sit at #111215 on the
+     #08090C page, and only floating surfaces — menus, modals, drawers, tooltips —
+     step up to #1D1D1F. Using the popover grey for cards was what made the redesigned
+     pages and the untouched ones look like two different apps. */
+  --surface-card: #111215;
+  --surface-card-hover: #15161A;
+  --surface-nav: #0C0D10;
+  --surface-sunken: #0F1013;
+  --surface-raised: #16181D;
+  --surface-float: #1D1D1F;
+  /* The ground a 3D or map canvas sits on, and what shows while it paints.
+     Deliberately not one of the card greys: the design keeps the canvas a shade
+     apart from the panels around it (--a-canvas). */
+  --surface-canvas: #15171B;
+  --inactive: #CBD5E1;
+  --orange: #F97316;
+  --primary: #0969FF;
+  --primary-accent: #60A5FA;
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --font-poppins: "Poppins";
+
+  /* Text ramp */
+  --tx: #E8EAED;
+  --tx15: #D4D7DE;
+  --tx2: #A3A9B6;
+  --tx3: #6B7280;
+  --tx4: #4A4C56;
+  --tx5: #3A3C44;
+
+  /* Coloured text */
+  --blue-tx: #9BC2FF;
+  --blue2-tx: #4DABF7;
+  --green-tx: #69DB7C;
+  --red-tx: #FF8787;
+  --amber-tx: #FFD43B;
+  --orange-tx: #FFA94D;
+  --violet-tx: #B197FC;
+  --violet2-tx: #C0A8FF;
+  --indigo-tx: #748FFC;
+  --teal-tx: #63E6BE;
+  --cyan-tx: #66D9E8;
+  --pink-tx: #F783AC;
+
+  /* Solid signal colours, for fills and icons rather than body text */
+  --amber-fg: #F59E0B;
+  --green-fg: #22C55E;
+  --red-fg: #EF4444;
+
+  /* From the component board: the primary's hover step, the navy wash behind a
+     brand moment (upgrade prompts, onboarding — once per page, never chrome)
+     and the gradient strip that signs it. */
+  --primary-hover: #0353D6;
+  --navy-deep: #0B1020;
+  --navy-mid: #101A33;
+  --brand-grad: linear-gradient(90deg, #FF72C0 0%, #6977F9 50%, #FBA18E 100%);
+
+  /* Foundations — radius, elevation, motion and the focus ring, so a module
+     can say `var(--radius-md)` instead of re-typing the board's numbers.
+     Dark cards carry no shadow; the hairline does that work. Shadows are for
+     overlays only, and lose most of their weight on light (see --sh*). */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+  --shadow-xs: 0 1px 2px var(--sh28);
+  --shadow-md: 0 8px 20px var(--sh45);
+  --shadow-lg: 0 20px 48px var(--sh5);
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-hover: 120ms;
+  --dur-open: 180ms;
+  --dur-page: 280ms;
+  /* Follows the tenant accent: Mantine writes --mantine-primary-color-filled
+     from whatever palette the theme was built with. */
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--mantine-primary-color-filled, var(--primary)) 35%, transparent);
+
+  /* Neutral alpha ramp — hairlines, dividers, hover fills, chip backgrounds */
+  --w012: rgba(255, 255, 255, 0.012);
+  --w015: rgba(255, 255, 255, 0.015);
+  --w02: rgba(255, 255, 255, 0.02);
+  --w022: rgba(255, 255, 255, 0.022);
+  --w025: rgba(255, 255, 255, 0.025);
+  --w028: rgba(255, 255, 255, 0.028);
+  --w03: rgba(255, 255, 255, 0.03);
+  --w035: rgba(255, 255, 255, 0.035);
+  --w04: rgba(255, 255, 255, 0.04);
+  --w045: rgba(255, 255, 255, 0.045);
+  --w05: rgba(255, 255, 255, 0.05);
+  --w055: rgba(255, 255, 255, 0.055);
+  --w06: rgba(255, 255, 255, 0.06);
+  --w07: rgba(255, 255, 255, 0.07);
+  --w08: rgba(255, 255, 255, 0.08);
+  --w09: rgba(255, 255, 255, 0.09);
+  --w1: rgba(255, 255, 255, 0.1);
+  --w12: rgba(255, 255, 255, 0.12);
+  --w14: rgba(255, 255, 255, 0.14);
+  --w16: rgba(255, 255, 255, 0.16);
+  --w18: rgba(255, 255, 255, 0.18);
+  --w2: rgba(255, 255, 255, 0.2);
+  --w22: rgba(255, 255, 255, 0.22);
+
+  /* Shadows. On light these lose most of their weight — a drop shadow tuned
+     for near-black reads as soot on white. */
+  --sh08: rgba(0, 0, 0, 0.08);
+  --sh28: rgba(0, 0, 0, 0.28);
+  --sh35: rgba(0, 0, 0, 0.35);
+  --sh45: rgba(0, 0, 0, 0.45);
+  --sh5: rgba(0, 0, 0, 0.5);
+  --sh6: rgba(0, 0, 0, 0.6);
+
+  /* Scrims behind overlays and sticky headers, in the page's own colour */
+  --scrim6: rgba(8, 9, 12, 0.6);
+  --scrim72: rgba(8, 9, 12, 0.72);
+  --scrim86: rgba(8, 9, 12, 0.86);
+  --scrim92: rgba(8, 9, 12, 0.92);
+  --scrim94: rgba(8, 9, 12, 0.94);
+
+  /* Legacy aliases. Kept so the per-mixin light overrides written before this
+     layer existed keep resolving; new code should use the tokens above. */
+  --light-bg-primary: var(--gray-9);
+  --light-bg-secondary: var(--surface-card);
+  --light-bg-tertiary: var(--surface-raised);
+  --light-bg-input: var(--surface-card);
+  --light-bg-hover: var(--surface-card-hover);
+  --light-bg-active: var(--surface-float);
+  --light-bg-sidebar: var(--surface-nav);
+  --light-border: var(--w12);
+  --light-border-subtle: var(--w07);
+  --light-border-input: var(--w12);
+  --light-text-primary: var(--tx);
+  --light-text-secondary: var(--tx2);
+  --light-text-tertiary: var(--tx3);
+  --light-shadow-sm: 0 1px 3px var(--sh35);
+  --light-shadow-md: 0 8px 20px var(--sh45);
+}
+
+/* Light mode. Same token names, re-pointed — nothing consumes these by a
+   different name, so a surface built on the ramp flips without touching it. */
+:root[data-mantine-color-scheme="light"] {
+  --black: #E8EDF3;
+  --white: #101317;
+  --gray-1: #4B5361;
+  --gray-2: #6C7583;
+  --gray-3: #C8CED7;
+  --gray-4: #ECEFF3;
+  --gray-5: #F4F6F9;
+  --gray-9: #E8EDF3;
+
+  --surface-card: #FFFFFF;
+  --surface-card-hover: #F7F9FB;
+  --surface-nav: #FFFFFF;
+  --surface-sunken: #DFE5EC;
+  --surface-raised: #F4F6F9;
+  --surface-float: #ECEFF3;
+  --surface-canvas: #CBD1D9;
+
+  --tx: #14171C;
+  --tx15: #2B3240;
+  --tx2: #4B5361;
+  --tx3: #6C7583;
+  --tx4: #98A0AD;
+  --tx5: #B9C0CA;
+
+  --blue-tx: #0B57D0;
+  --blue2-tx: #1971C2;
+  --green-tx: #157F3C;
+  --red-tx: #C92A2A;
+  --amber-tx: #A16207;
+  --orange-tx: #D9480F;
+  --violet-tx: #6741D9;
+  --violet2-tx: #5F3DC4;
+  --indigo-tx: #3B5BDB;
+  --teal-tx: #087F5B;
+  --cyan-tx: #0B7285;
+  --pink-tx: #C2255C;
+
+  --amber-fg: #B45309;
+  --green-fg: #15803D;
+  --red-fg: #DC2626;
+
+  --navy-deep: #E9EFFB;
+  --navy-mid: #DCE6FA;
+
+  /* Slate rather than pure black: a neutral-black hairline on a cool grey page
+     reads as a smudge, and the design's light ground is cool. The four steps
+     the board names (07/09/12/2) sit a touch heavier on light than their dark
+     twins — slate at the same alpha reads fainter on a pale ground. */
+  --w012: rgba(15, 23, 42, 0.012);
+  --w015: rgba(15, 23, 42, 0.015);
+  --w02: rgba(15, 23, 42, 0.02);
+  --w022: rgba(15, 23, 42, 0.022);
+  --w025: rgba(15, 23, 42, 0.025);
+  --w028: rgba(15, 23, 42, 0.028);
+  --w03: rgba(15, 23, 42, 0.03);
+  --w035: rgba(15, 23, 42, 0.035);
+  --w04: rgba(15, 23, 42, 0.04);
+  --w045: rgba(15, 23, 42, 0.045);
+  --w05: rgba(15, 23, 42, 0.05);
+  --w055: rgba(15, 23, 42, 0.055);
+  --w06: rgba(15, 23, 42, 0.06);
+  --w07: rgba(15, 23, 42, 0.08);
+  --w08: rgba(15, 23, 42, 0.09);
+  --w09: rgba(15, 23, 42, 0.11);
+  --w1: rgba(15, 23, 42, 0.12);
+  --w12: rgba(15, 23, 42, 0.16);
+  --w14: rgba(15, 23, 42, 0.17);
+  --w16: rgba(15, 23, 42, 0.19);
+  --w18: rgba(15, 23, 42, 0.21);
+  --w2: rgba(15, 23, 42, 0.28);
+  --w22: rgba(15, 23, 42, 0.3);
+
+  --sh08: rgba(15, 23, 42, 0.02);
+  --sh28: rgba(15, 23, 42, 0.08);
+  --sh35: rgba(15, 23, 42, 0.10);
+  --sh45: rgba(15, 23, 42, 0.13);
+  --sh5: rgba(15, 23, 42, 0.14);
+  --sh6: rgba(15, 23, 42, 0.14);
+
+  --scrim6: rgba(255, 255, 255, 0.6);
+  --scrim72: rgba(255, 255, 255, 0.72);
+  --scrim86: rgba(255, 255, 255, 0.86);
+  --scrim92: rgba(255, 255, 255, 0.92);
+  --scrim94: rgba(255, 255, 255, 0.94);
+
+  /* Legacy aliases follow the tokens rather than the other way round. */
+  --light-bg-primary: var(--gray-9);
+  --light-bg-secondary: var(--surface-card);
+  --light-bg-tertiary: var(--surface-raised);
+  --light-bg-input: var(--surface-card);
+  --light-bg-hover: var(--surface-card-hover);
+  --light-bg-active: var(--surface-float);
+  --light-bg-sidebar: var(--surface-nav);
+  --light-border: var(--w18);
+  --light-border-subtle: var(--w09);
+  --light-border-input: var(--w22);
+  --light-text-primary: var(--tx);
+  --light-text-secondary: var(--tx2);
+  --light-text-tertiary: var(--tx3);
+  --light-shadow-sm: 0 0 0 1px var(--w08), 0 1px 3px var(--sh35);
+  --light-shadow-md: 0 8px 20px var(--sh45);
+}
+
+html,
+body {
+  font-family: var(--font-poppins), sans-serif;
+  height: 100dvh;
+  width: 100%;
+  overflow-x: hidden;
+  touch-action: manipulation;
+  background-color: var(--gray-9); // Default dark background to prevent white flash
+}
+
+// Prevent iOS Safari auto-zoom on input focus (triggers when font-size < 16px)
+@media screen and (max-width: 64rem) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+// `--gray-9` is the page ground in both themes now, so the body needs no
+// per-scheme rule of its own.
+
+// The board's press feedback is a 1px drop, not a scale — a scaled button
+// visibly shrinks its label, a dropped one just reads as pushed.
+button:active {
+  transition: transform var(--dur-hover) var(--ease);
+  transform: translateY(1px);
+  &[data-disabled=true],
+  &:disabled {
+    transform: none;
+  }
+}
+
+// Today in every date picker (the theme sets `highlightToday`). Mantine's own
+// mark is a grey-4 hairline that disappears next to the other days; an accent
+// ring and bold digit are findable at a glance. A selected day keeps its fill.
+[data-today][data-highlight-today]:not([data-selected], [data-in-range]) {
+  border: 1px solid var(--mantine-primary-color-filled, var(--primary));
+  color: var(--mantine-primary-color-filled, var(--primary));
+  font-weight: 700;
+}
+
+// ========================================
+// Responsive Visibility Utilities
+// ========================================
+
+// Hide on mobile (max-width: 40rem / 640px)
+.hide-mobile {
+  @media (max-width: 40rem) {
+    display: none !important;
+  }
+}
+
+// Hide on tablet and below (max-width: 64rem / 1024px)
+.hide-tablet {
+  @media (max-width: 64rem) {
+    display: none !important;
+  }
+}
+
+// Show only on mobile (max-width: 40rem / 640px)
+.show-mobile-only {
+  display: none;
+  @media (max-width: 40rem) {
+    display: block;
+  }
+}
+
+// Show only on tablet (max-width: 64rem / 1024px)
+.show-tablet-only {
+  display: none;
+  @media (max-width: 64rem) {
+    display: block;
+  }
+}
+
+// Inline variants
+.show-mobile-only-inline {
+  display: none;
+  @media (max-width: 40rem) {
+    display: inline;
+  }
+}
+
+.show-tablet-only-inline {
+  display: none;
+  @media (max-width: 64rem) {
+    display: inline;
+  }
+}
+
+// Flex variants
+.show-mobile-only-flex {
+  display: none;
+  @media (max-width: 40rem) {
+    display: flex;
+  }
+}
+
+.show-tablet-only-flex {
+  display: none;
+  @media (max-width: 64rem) {
+    display: flex;
+  }
+}
+
+// ========================================
+// Responsive Layout Utilities
+// ========================================
+
+// Stack items vertically on mobile
+.stack-mobile {
+  @media (max-width: 40rem) {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+// Stack items vertically on tablet and below
+.stack-tablet {
+  @media (max-width: 64rem) {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+// Full width on mobile
+.full-width-mobile {
+  @media (max-width: 40rem) {
+    width: 100% !important;
+  }
+}
+
+// Full width on tablet and below
+.full-width-tablet {
+  @media (max-width: 64rem) {
+    width: 100% !important;
+  }
+}
+
+// ========================================
+// Tiptap Image Resize Handles
+// ========================================
+
+[data-resize-container] {
+  display: inline-flex !important;
+}
+
+[data-resize-wrapper] {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+
+  &:hover [data-resize-handle],
+  &:has([data-resize-handle]:active) [data-resize-handle] {
+    opacity: 1;
+  }
+}
+
+[data-resize-handle] {
+  opacity: 0;
+  transition: opacity 150ms ease;
+  background: var(--primary);
+  border-radius: 2px;
+  z-index: 10;
+
+  &[data-resize-handle="right"] {
+    width: 4px;
+    cursor: ew-resize;
+  }
+
+  &[data-resize-handle="bottom"] {
+    height: 4px;
+    cursor: ns-resize;
+  }
+
+  &[data-resize-handle="bottom-right"],
+  &[data-resize-handle="bottom-left"],
+  &[data-resize-handle="top-right"],
+  &[data-resize-handle="top-left"] {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  &[data-resize-handle="bottom-right"] { cursor: nwse-resize; }
+  &[data-resize-handle="bottom-left"] { cursor: nesw-resize; }
+  &[data-resize-handle="top-right"] { cursor: nesw-resize; }
+  &[data-resize-handle="top-left"] { cursor: nwse-resize; }
+}
+
+/* Native scrollbars, sized and tinted to match the design. Mantine's
+   ScrollArea draws its own bar and is unaffected; this covers everything that
+   scrolls natively — the page column, tables, popovers and text areas. */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-3);
+  border-radius: 8px;
+
+  &:hover {
+    background: var(--tx4);
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}

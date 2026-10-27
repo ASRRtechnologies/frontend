@@ -1,0 +1,17 @@
+/* Tooltips per the component board: the floating surface with a --w09
+   hairline, radius 8, 6px 10px, 12px text and the mid overlay shadow. */
+
+.tooltip {
+  background-color: var(--surface-float);
+  color: var(--tx);
+  border: 1px solid var(--w09);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+.arrow {
+  border: 1px solid var(--w09);
+  background-color: var(--surface-float);
+}

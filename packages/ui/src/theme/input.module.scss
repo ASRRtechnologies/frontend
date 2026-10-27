@@ -1,0 +1,117 @@
+/* Shared input surface, applied through the theme to Input, Select, DateInput
+   and NumberInput — so a dropdown looks the same wherever it appears rather
+   than being restyled per page. */
+
+:root[data-mantine-color-scheme="light"] {
+  /* Same trick as dark, one step lighter: the design's light field is a tint of
+     the ground it sits on (`.fld` is --a-w03/04/05 there), never a white box with
+     a line round it. Translucent for the same reason as dark — a field sits on
+     the page (var(--gray-9)) as often as inside a white card, and a flat hex
+     disappears against one of the two. */
+  --input-background: var(--w05);
+  /* The fill is what shapes the field now. A hard border (this was #7e8694, a
+     line dark enough to read as black against a white card) is not in the design
+     at all — where the design does draw a field edge it is the --a-w07 hairline. */
+  --input-border: var(--w07);
+  --input-focus-border: var(--primary);
+  --input-hover-background: var(--w07);
+  /* The placeholder rides the field, and the field is now a tint of whatever it
+     sits on — so the worst case is not the white card (4.20:1 for --tx3 #6C7583)
+     but the page ground, where the same grey falls to 3.58:1. This sits on the
+     design's own --tx3 → --tx2 #4B5361 ramp, far enough down to clear AA in both
+     places (5.38:1 on a card, 4.58:1 on the page). Pinned by input-contrast.test.ts. */
+  --input-placeholder: #5c6472;
+}
+
+:root[data-mantine-color-scheme="dark"] {
+  /* The component board's field: the raised surface (#16181D) with a --w09
+     hairline. Raised rather than translucent so a field reads as one thing on
+     the page ground and inside a card alike — the board draws it the same on
+     both. */
+  --input-background: var(--surface-raised);
+  --input-border: var(--w09);
+  --input-focus-border: var(--primary);
+  --input-hover-background: var(--surface-float);
+}
+
+.input {
+  background-color: var(--input-background);
+  // The board's field is a 36px rounded rectangle at radius 10 — the pill is
+  // reserved for filter chips (see surface.chip). Text is 13px; label and help
+  // text sit at 12px (below).
+  border-radius: var(--radius-md);
+  border: 1px solid var(--input-border);
+  font-size: 13px;
+  transition:
+    background-color var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease),
+    box-shadow var(--dur-hover) var(--ease);
+
+  &:hover:not(:disabled):not([data-disabled]) {
+    background-color: var(--input-hover-background);
+  }
+
+  // The design's `.fld` takes a 3px accent ring on focus. A 1px border-colour
+  // change alone is the first thing to disappear on a low-contrast screen.
+  &:focus,
+  &:focus-within {
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-focus-border) 35%, transparent);
+  }
+
+  // Disabled per the board: a --w03 wash behind a --w07 hairline, value in
+  // --tx4. Mantine's own treatment stacks opacity on top of grey text, which
+  // is near-invisible on the light background.
+  &:disabled,
+  &[data-disabled] {
+    opacity: 1;
+    background-color: var(--w03);
+    border-color: var(--w07);
+    color: var(--tx4);
+    cursor: not-allowed;
+  }
+
+  /* Mantine marks an invalid field by re-pointing its own --input-bd, but the
+     shorthand above is unlayered and wins, so `error` used to change nothing but
+     the message underneath. That was survivable while every field was outlined;
+     against a borderless tint an invalid field would be indistinguishable. Last
+     in the file so it also beats the focus rule — an invalid field stays red
+     while you are typing in it. */
+  &[data-error],
+  &[data-error]:focus,
+  &[data-error]:focus-within {
+    border-color: var(--red-fg);
+  }
+
+  &[data-error]:focus,
+  &[data-error]:focus-within {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--red-fg) 30%, transparent);
+  }
+
+  &:is(textarea) {
+    padding-block: 10px;
+    line-height: 1.6;
+  }
+}
+
+/* Label above the field (12px medium, --tx2), help text under it (12px,
+   --tx3); an error message replaces the help text in the same slot. Applied
+   through the theme to Input.Wrapper, which every Mantine field renders. */
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tx2);
+  margin-bottom: 7px;
+}
+
+.description {
+  font-size: 12px;
+  color: var(--tx3);
+  margin-top: 7px;
+}
+
+.error {
+  font-size: 12px;
+  color: var(--red-tx);
+  margin-top: 7px;
+}

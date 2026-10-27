@@ -1,0 +1,94 @@
+@use 'sass:math';
+
+// Define variables for your breakpoints,
+// values must be the same as in your theme and in postcss.config.js
+$mantine-breakpoint-xs: 32rem;
+$mantine-breakpoint-sm: 40rem;
+$mantine-breakpoint-md: 48rem;
+$mantine-breakpoint-lg: 64rem;
+$mantine-breakpoint-xl: 80rem;
+$mantine-breakpoint-xxl: 96rem;
+
+@mixin hex-to-rgba($color, $opacity: 0.3) {
+  background: $color; /* The Fallback */
+  background: rgba($color, $opacity);
+}
+
+@function rem($value) {
+  @return #{math.div(math.div($value, $value * 0 + 1), 16)}rem;
+}
+
+@mixin light {
+  [data-mantine-color-scheme='light'] & {
+    @content;
+  }
+}
+
+@mixin dark {
+  [data-mantine-color-scheme='dark'] & {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}
+
+@mixin smaller-than($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin larger-than($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Add direction mixins if you need rtl support
+@mixin rtl {
+  [dir='rtl'] & {
+    @content;
+  }
+}
+
+@mixin ltr {
+  [dir='ltr'] & {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $mantine-breakpoint-lg + 1){
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $mantine-breakpoint-lg){
+    @content;
+  }
+}
+
+@mixin tabletSmall {
+  @media (max-width: $mantine-breakpoint-md){
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $mantine-breakpoint-sm){
+    @content;
+  }
+}

@@ -1,0 +1,88 @@
+/* The scrollable element that carries the mask + animations */
+.maskedOverflow {
+	/* You can tweak these from the component props */
+	--mask-height: 80px;
+	--scroll-buffer: 2rem;
+	--foreground: #000;
+
+	/* Ensure we actually scroll (Mantine handles overflow) */
+	will-change: mask-image, mask-position, mask-size;
+
+	/* ---------- Scroll-mask layers ---------- */
+	/* 1) Top gradient (reveals as you scroll down)
+       2) Bottom gradient (hides as you approach the end)
+       3) Solid layer (everything else is fully visible) */
+	mask-image:
+		linear-gradient(to top, transparent, var(--foreground) 90%),
+		linear-gradient(to bottom, transparent 0%, var(--foreground) 100%),
+		linear-gradient(var(--foreground), var(--foreground));
+
+	/* These variables are animated by keyframes */
+	mask-size:
+		100% var(--top-mask-height, 0px),
+		100% var(--bottom-mask-height, var(--mask-height)),
+		100% 100%;
+
+	mask-position:
+		0 0,
+		0 100%,
+		0 0;
+
+	mask-repeat: no-repeat, no-repeat, no-repeat;
+
+	/* Exclude gradient areas from the solid mask layer */
+	mask-composite: exclude;
+
+	/* ---------- Scroll-driven animation wiring ---------- */
+	/* Two animations, both attached to our own scroll container */
+	animation-name: show-top-mask, hide-bottom-mask;
+	animation-timeline: scroll(self), scroll(self);
+	/* Where in the scroll each animation should run:
+       - Top: from 0 to scrollBuffer (e.g., first ~2rem of scroll)
+       - Bottom: from (100% - scrollBuffer) to 100% */
+	animation-range:
+		0 var(--scroll-buffer),
+		calc(100% - var(--scroll-buffer)) 100%;
+
+	/* Preserve start & end states for both animations (per tweet tip) */
+	animation-fill-mode: both;
+}
+
+/* Prefer reduced motion: keep static fades (no animated change) */
+@media (prefers-reduced-motion: reduce) {
+	.maskedOverflow {
+		animation: none;
+		/* keep a small constant fade at top & bottom */
+		--top-mask-height: calc(var(--mask-height) * 0.6);
+		--bottom-mask-height: calc(var(--mask-height) * 0.6);
+	}
+}
+
+/* Feature-fallback: if scroll-timeline isn't supported, keep small static fades */
+@supports not (animation-timeline: scroll(self)) {
+	.maskedOverflow {
+		animation: none;
+		--top-mask-height: calc(var(--mask-height) * 0.6);
+		--bottom-mask-height: calc(var(--mask-height) * 0.6);
+	}
+}
+
+/* ---------- Keyframes ----------
+   These only change the *variables* consumed by mask-size. */
+@keyframes show-top-mask {
+	from {
+		--top-mask-height: 0px;
+	}
+	to {
+		--top-mask-height: var(--mask-height);
+	}
+}
+
+@keyframes hide-bottom-mask {
+	from {
+		--bottom-mask-height: var(--mask-height);
+	}
+	to {
+		--bottom-mask-height: 0px;
+	}
+}

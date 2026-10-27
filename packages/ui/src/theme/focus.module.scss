@@ -1,0 +1,11 @@
+/* The board's focus ring — 3px of the accent at 35% — as Mantine's
+   `theme.focusClassName`, so every focusable Mantine element that is not an
+   input (those have their own rule in input.module.scss) shows the same ring
+   instead of the default 2px outline. */
+
+.focus {
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+}

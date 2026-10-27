@@ -1,0 +1,10 @@
+/* Headings per the component board: the display and page/section titles pull
+   their tracking in (-0.03em / -0.02em); sizes and the 600 weight come from
+   theme.headings. */
+
+.root {
+  &[data-order="1"],
+  &[data-order="2"] {
+    letter-spacing: -0.02em;
+  }
+}

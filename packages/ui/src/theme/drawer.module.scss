@@ -1,0 +1,25 @@
+:root[data-mantine-color-scheme="light"] {
+  --drawer-background: var(--light-bg-secondary);
+  --drawer-background-rgba-opacity: rgba(0, 0, 0, 0.3);
+  --drawer-header-border: var(--light-border-subtle);
+}
+
+:root[data-mantine-color-scheme="dark"] {
+  --drawer-background: var(--gray-4);
+  --drawer-background-rgba-opacity: rgba(29, 29, 31, 0.8);
+  --drawer-header-border: var(--mantine-color-default-border);
+}
+
+.root{
+  border: transparent;
+  background-color: var(--drawer-background);
+}
+
+.body{
+  background-color: var(--drawer-background);
+}
+
+.header{
+  background-color: var(--drawer-background);
+  border-bottom: 1px solid var(--drawer-header-border);
+}

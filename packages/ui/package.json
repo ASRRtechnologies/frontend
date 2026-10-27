@@ -1,0 +1,60 @@
+{
+	"name": "@asrr/ui",
+	"version": "1.0.5",
+	"description": "ASRR's Mantine theme and design-system primitives, as used in Alpha.",
+	"license": "UNLICENSED",
+	"type": "module",
+	"sideEffects": [
+		"**/*.css"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ASRRtechnologies/frontend.git",
+		"directory": "packages/ui"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./styles.css": "./dist/index.css",
+		"./scss/*": "./scss/*"
+	},
+	"files": [
+		"dist",
+		"scss"
+	],
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
+	"scripts": {
+		"build": "rm -rf dist && vite build && tsc -p tsconfig.build.json && bun run copy-scss",
+		"copy-scss": "rm -rf scss && mkdir scss && cp src/theme/_surface.scss src/theme/_mantine.scss scss/",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"test": "vitest run"
+	},
+	"peerDependencies": {
+		"@mantine/core": "9.6.3",
+		"@mantine/dates": "9.6.3",
+		"@mantine/hooks": "9.6.3",
+		"@tabler/icons-react": "3.35.0",
+		"react": "19.3.0",
+		"react-dom": "19.3.0"
+	},
+	"dependencies": {
+		"@asrr/utils": "workspace:^",
+		"clsx": "^2.1.1"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "6.9.1",
+		"@testing-library/react": "16.3.2",
+		"@types/react": "19",
+		"@types/react-dom": "19",
+		"@vitejs/plugin-react": "6.1.1",
+		"dayjs": "1.11.21",
+		"jsdom": "27.4.0",
+		"sass-embedded": "1.100.0",
+		"vite": "8.3.5"
+	}
+}

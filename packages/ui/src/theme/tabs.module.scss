@@ -1,0 +1,37 @@
+/* Tabs per the component board: 13px medium on 9px 13px, --tx3 at rest, --tx
+   when current, and a 2px accent underline sitting on the list's --w07
+   hairline. Scoped to the default variant — the pill tabs in settings keep
+   their own shape. */
+
+.root[data-variant="default"] {
+  .list::before {
+    border-color: var(--w07);
+  }
+
+  .tab {
+    padding: 9px 13px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--tx3);
+    border-bottom-width: 2px;
+    transition:
+      color var(--dur-hover) var(--ease),
+      border-color var(--dur-hover) var(--ease);
+
+    &:hover {
+      background-color: transparent;
+      border-color: transparent;
+      color: var(--tx2);
+    }
+
+    &[data-active] {
+      color: var(--tx);
+      border-color: var(--mantine-color-primary-filled);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+  }
+}

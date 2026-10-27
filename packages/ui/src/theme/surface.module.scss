@@ -1,0 +1,89 @@
+/* Ready-made classes for the design primitives in `_surface.scss`, for pages
+   that want to import them straight from TS:
+
+     import surface from "@/shared/styles/surface.module.scss";
+     <div className={surface.card} />
+
+   Pages with their own module should `@use "./_surface.scss"` and
+   include the mixins on their own class names instead. */
+
+@use "./_surface.scss" as surface;
+
+.card {
+  @include surface.card;
+}
+.cardStatic {
+  @include surface.card-static;
+}
+.eyebrow {
+  @include surface.eyebrow;
+}
+.pageHead {
+  @include surface.page-head;
+}
+.pageTitle {
+  @include surface.page-title;
+}
+.stagger {
+  @include surface.stagger;
+}
+.kpiRow {
+  @include surface.kpi-row;
+}
+.kpiValue {
+  @include surface.kpi-value;
+}
+.kpiValueSm {
+  @include surface.kpi-value(21px);
+}
+.kpiDelta {
+  @include surface.kpi-delta;
+}
+.columns {
+  @include surface.columns;
+}
+.rail {
+  @include surface.rail;
+}
+.railDot {
+  @include surface.rail-dot;
+}
+.railItem {
+  @include surface.rail-item;
+}
+.dataTable {
+  @include surface.data-table;
+}
+.chip {
+  @include surface.chip;
+}
+.tagChip {
+  @include surface.tag-chip;
+}
+.accentPill {
+  @include surface.accent-pill;
+}
+.listRow {
+  @include surface.list-row;
+}
+.rows {
+  @include surface.field-rows;
+}
+.row {
+  @include surface.field-row;
+}
+.rowLabel {
+  @include surface.field-row-label;
+}
+.rowValue {
+  @include surface.field-row-value;
+}
+.iconSquare {
+  @include surface.icon-square;
+}
+.rankBadge {
+  @include surface.rank-badge;
+}
+.rankTable {
+  @include surface.rank-table;
+}

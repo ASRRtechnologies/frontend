@@ -1,0 +1,40 @@
+/* Icon buttons per the component board: the boxed one is variant="default"
+   (raised surface, --w09 hairline, --tx2 glyph that lifts to --tx on hover);
+   the theme's default variant stays "subtle" so inline row actions do not all
+   grow a box. Size is not pinned here — the board's 36px square is
+   size="input-sm", which lines up with a field. */
+
+.root {
+  transition:
+    background-color var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease),
+    box-shadow var(--dur-hover) var(--ease);
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  &[data-variant="default"] {
+    --ai-bg: var(--surface-raised);
+    --ai-bd: 1px solid var(--w09);
+    --ai-color: var(--tx2);
+    --ai-hover: var(--surface-float);
+    --ai-hover-color: var(--tx);
+  }
+
+  &[data-variant="subtle"] {
+    --ai-hover: var(--w05);
+  }
+
+  /* `--ai-bd` is a border shorthand; as a `border-color` it is invalid and
+     falls back to currentColor — the same grey frame button.module.scss had. */
+  &:disabled,
+  &[data-disabled] {
+    background: var(--ai-bg, transparent);
+    border: var(--ai-bd, 1px solid transparent);
+    color: var(--ai-color, inherit);
+    opacity: 0.4;
+  }
+}

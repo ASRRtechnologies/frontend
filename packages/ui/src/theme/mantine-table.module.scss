@@ -1,0 +1,27 @@
+/* Data tables per the component board (06 — Status en data): an eyebrow-style
+   header row (10px / 600 / .12em, --tx3 on a --w03 wash, --w07 rule under it),
+   13px body rows on 12px 16px with a --w03 hairline between them, and the
+   same wash on hover and striped rows. Applied through the theme to every
+   Mantine `Table`, including the TanStack wrapper in shared/components/table. */
+
+.table {
+  --table-border-color: var(--w07);
+  --table-hover-color: var(--w03);
+  --table-striped-color: var(--w03);
+  font-size: 13px;
+}
+
+.th {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tx3);
+  background-color: var(--w03);
+  padding: 10px 16px;
+}
+
+.td {
+  padding: 12px 16px;
+  border-bottom-color: var(--w03);
+}

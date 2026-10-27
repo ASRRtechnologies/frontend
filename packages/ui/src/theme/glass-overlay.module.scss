@@ -1,0 +1,131 @@
+@use "./_mantine.scss" as *;
+
+// Shared glassmorphism styles for overlay panels on 3D viewers
+// Uses the dark glass variant for good contrast over 3D content
+
+.panel {
+  backdrop-filter: blur(12px);
+  background-color: rgba(21, 21, 23, 0.75);
+  border: 1px solid var(--w1);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  color: #e0e0e0;
+}
+
+.topBar {
+  composes: panel;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  border-radius: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.sidePane {
+  composes: panel;
+  position: fixed;
+  top: 48px;
+  right: 0;
+  bottom: 0;
+  width: 420px;
+  z-index: 9999;
+  border-radius: 0;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  @include tablet {
+    width: 100%;
+  }
+}
+
+.section {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #868e96;
+  margin-bottom: 8px;
+}
+
+.glassButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--w12);
+  background-color: var(--w06);
+  color: #adb5bd;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+
+  &:hover {
+    background-color: var(--w1);
+    border-color: var(--w2);
+    color: #e0e0e0;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.glassButtonActive {
+  composes: glassButton;
+  border-color: var(--active-color, rgba(255, 255, 255, 0.3));
+  color: var(--active-color, var(--green-tx));
+  background-color: color-mix(in srgb, var(--active-color, var(--green-tx)) 12%, transparent);
+}
+
+.glassInput {
+  width: 100%;
+  background-color: var(--w06);
+  border: 1px solid var(--w12);
+  border-radius: 8px;
+  color: #e0e0e0;
+  padding: 8px 10px;
+  font-size: 12px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+
+  &:focus {
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.tag {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background-color: var(--w06);
+  font-size: 11px;
+  color: #adb5bd;
+}
+
+.dimText {
+  color: #636b73;
+}
+
+.primaryText {
+  color: #e0e0e0;
+}
+
+.secondaryText {
+  color: #868e96;
+}

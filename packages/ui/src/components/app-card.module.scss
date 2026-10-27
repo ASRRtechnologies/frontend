@@ -1,0 +1,49 @@
+.card {
+  position: relative;
+  gap: 16px;
+
+  &[data-with-padding="false"] {
+    padding: 0 !important;
+  }
+
+  &[data-has-scroll="true"] {
+    padding: 0 !important;
+    .scrollAreaViewport{
+      padding: var(--card-padding);
+    }
+    .titleContainer {
+      padding: var(--card-padding) var(--card-padding) 0 var(--card-padding);
+    }
+  }
+
+  &[data-is-active="true"] {
+    background: var(--paper-background-active);
+  }
+}
+
+.scrollAreaRoot{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.scrollAreaViewport{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.scrollAreaContent {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  flex: 1;
+}
+
+.titleContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}

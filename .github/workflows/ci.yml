@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint, typecheck, test, build
+    runs-on: ${{ vars.LINUX_RUNNER || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - run: bun install --frozen-lockfile
+      - run: bunx biome ci .
+      # ui resolves @asrr/utils through its built dist, so utils builds first.
+      - run: bun run --filter '@asrr/utils' build
+      - run: bun run typecheck
+      - run: bun run test
+      - run: bun run --filter '@asrr/ui' build

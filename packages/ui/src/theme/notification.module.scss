@@ -1,0 +1,31 @@
+/* Toasts per the component board: the floating surface (--surface-float) with
+   a --w09 hairline, radius 10 and the large overlay shadow, 13px text. */
+
+.root {
+  background-color: var(--surface-float);
+  border: 1px solid var(--w09);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 13px 14px;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tx);
+}
+
+.description {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--tx2);
+}
+
+.closeButton {
+  color: var(--tx3);
+
+  &:hover {
+    background-color: var(--w05);
+    color: var(--tx);
+  }
+}

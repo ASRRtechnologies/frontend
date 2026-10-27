@@ -1,0 +1,49 @@
+/* Segmented control per the component board: the raised surface behind a
+   --w07 hairline at radius 10 with a 3px inset (theme vars), the active
+   segment lifted onto the card surface at radius 8, labels 12px medium in
+   --tx3 that turn --tx when current. */
+
+:root[data-mantine-color-scheme="light"] {
+  --segmented-control-background: var(--surface-raised);
+  --segmented-control-item-border: var(--w07);
+  --segmented-control-item-hover: var(--w05);
+  --segmented-control-indicator: var(--surface-card);
+  --segmented-control-indicator-shadow: var(--shadow-xs);
+}
+
+:root[data-mantine-color-scheme="dark"] {
+  --segmented-control-background: var(--surface-raised);
+  --segmented-control-item-border: var(--w07);
+  --segmented-control-item-hover: var(--w05);
+  --segmented-control-indicator: var(--surface-card);
+  --segmented-control-indicator-shadow: none;
+}
+
+.root {
+  background-color: var(--segmented-control-background);
+  border: 1px solid var(--segmented-control-item-border);
+}
+
+.label {
+  font-weight: 500;
+  color: var(--tx3);
+  transition: color var(--dur-hover) var(--ease);
+
+  &:hover {
+    color: var(--tx2);
+  }
+
+  &[data-active] {
+    color: var(--tx);
+  }
+
+  &:focus {
+    background-color: var(--segmented-control-item-hover);
+  }
+}
+
+.indicator {
+  background-color: var(--segmented-control-indicator);
+  border-radius: 8px;
+  box-shadow: var(--segmented-control-indicator-shadow);
+}

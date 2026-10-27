@@ -1,0 +1,86 @@
+/* Checkbox, radio and switch per the component board (04 — Invoervelden).
+   Sizes come from theme.tsx `vars`; this file draws the resting and checked
+   states, which Mantine paints in its own greys otherwise. */
+
+/* ── Checkbox: 17px, radius 5, --w2 hairline at rest, solid accent when on. */
+.checkboxInput {
+  background-color: transparent;
+  border: 1px solid var(--w2);
+  transition:
+    background-color var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease);
+
+  &:checked,
+  &[data-indeterminate] {
+    background-color: var(--mantine-color-primary-filled);
+    border-color: var(--mantine-color-primary-filled);
+  }
+
+  &:disabled {
+    background-color: var(--w03);
+    border-color: var(--w09);
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+}
+
+/* ── Radio: same 17px ring; checked is a solid accent ring round a white dot. */
+.radioRadio {
+  background-color: transparent;
+  border: 1px solid var(--w2);
+  transition:
+    background-color var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease);
+
+  &:checked {
+    background-color: var(--mantine-color-primary-filled);
+    border-color: var(--mantine-color-primary-filled);
+  }
+
+  &:disabled {
+    background-color: var(--w03);
+    border-color: var(--w09);
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+}
+
+/* ── Switch: 38×22 track, 18px white thumb, --w12 off / accent on. */
+.switchTrack {
+  background-color: var(--w12);
+  border-color: transparent;
+  transition: background-color var(--dur-open) var(--ease);
+}
+
+.switchInput:checked + .switchTrack {
+  background-color: var(--mantine-color-primary-filled);
+  border-color: transparent;
+}
+
+.switchInput:focus-visible + .switchTrack {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.switchThumb {
+  background-color: #fff;
+  border: 0;
+  box-shadow: 0 1px 3px var(--sh35);
+}
+
+.switchInput:disabled + .switchTrack {
+  opacity: 0.45;
+
+  .switchThumb {
+    background-color: var(--tx4);
+    box-shadow: none;
+  }
+}
