@@ -1,6 +1,6 @@
 {
 	"name": "@asrr/ui",
-	"version": "1.0.5",
+	"version": "2.0.0",
 	"description": "ASRR's Mantine theme and design-system primitives, as used in Alpha.",
 	"license": "UNLICENSED",
 	"type": "module",

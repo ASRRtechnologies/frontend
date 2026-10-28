@@ -1,6 +1,6 @@
 {
 	"name": "@asrr/utils",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "Framework-free formatting, address and search helpers shared by ASRR frontends.",
 	"license": "UNLICENSED",
 	"type": "module",
