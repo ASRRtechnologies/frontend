@@ -1,4 +1,4 @@
 {
-	"packages/utils": "0.0.0",
-	"packages/ui": "1.0.5"
+	"packages/utils": "0.1.0",
+	"packages/ui": "2.0.0"
 }
